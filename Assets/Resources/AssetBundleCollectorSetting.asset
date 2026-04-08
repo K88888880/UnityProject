@@ -58,16 +58,16 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetsPackage/AssetsHotfix/HotfixDemo/Entities
-        CollectorGUID: 8501752ccc766a54b957e5555b8ecb0d
+      - CollectPath: Assets/AssetsPackage/HotfixDemo/Scenes
+        CollectorGUID: 74b0a4ff0b1438849b127f9a033371c8
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/AssetsPackage/AssetsHotfix/HotfixDemo/Scenes
-        CollectorGUID: 74b0a4ff0b1438849b127f9a033371c8
+      - CollectPath: Assets/AssetsPackage/HotfixDemo/Prefab/Entities/Cube.prefab
+        CollectorGUID: 7013dc4d2c2721e42a0e7cb033a1a92a
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

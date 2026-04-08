@@ -1,0 +1,251 @@
+{
+    "comments": [
+        {
+            "guid": "c073eda4532c1d543ab1afbf5c6a1955",
+            "title": "美术资源总目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648472896,
+            "modifiedTimeStamp": 1775648472896
+        },
+        {
+            "guid": "021acf0ab2b848d46b0d7943ec61896e",
+            "title": "动画文件",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648652885,
+            "modifiedTimeStamp": 1775648652885
+        },
+        {
+            "guid": "9549c80ca7e6d9340b77799d74aede18",
+            "title": "通用纹理",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648663985,
+            "modifiedTimeStamp": 1775648663985
+        },
+        {
+            "guid": "ebdd3381a1c7e0747953ef71def9d709",
+            "title": "通用材质",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648673909,
+            "modifiedTimeStamp": 1775648673909
+        },
+        {
+            "guid": "3cf46f5dfaf83f74a92fbfc5b59493d2",
+            "title": "预制体目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648688336,
+            "modifiedTimeStamp": 1775648688336
+        },
+        {
+            "guid": "68fe0e8aefcd6bf4c8d7c8e465738c6a",
+            "title": "代码总目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648764809,
+            "modifiedTimeStamp": 1775648764809
+        },
+        {
+            "guid": "ed2691d248e324e40848147601ad7f52",
+            "title": "游戏逻辑",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775648789970,
+            "modifiedTimeStamp": 1775648789970
+        },
+        {
+            "guid": "53a8768d91a45f2408a5658db8dec810",
+            "title": "热更新资源目录",
+            "comment": "",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.0,
+                "b": 0.13198184967041017,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650102729,
+            "modifiedTimeStamp": 1775650102729
+        },
+        {
+            "guid": "1b25aa2a815c64848b66d2ebede4a799",
+            "title": "AOT元数据代码目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650119814,
+            "modifiedTimeStamp": 1775650119814
+        },
+        {
+            "guid": "3a196d31b30b58d4ba4c0e8c00585dfd",
+            "title": "基础通用资源目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.11919236183166504,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650140070,
+            "modifiedTimeStamp": 1775650140070
+        },
+        {
+            "guid": "caa089bdff1a0be409160be80b05ef45",
+            "title": "热更新代码记录文件",
+            "comment": "",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.9496855139732361,
+                "b": 0.6287809610366821,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650163178,
+            "modifiedTimeStamp": 1775650163178
+        },
+        {
+            "guid": "cfd35a095e4476a4d87e9056c4a48d79",
+            "title": "热更新程序集目录",
+            "comment": "",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.8797261118888855,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650184528,
+            "modifiedTimeStamp": 1775650219665
+        },
+        {
+            "guid": "9a6e86a69cd17b24dbba9647ab7c2c84",
+            "title": "热更新项目资源目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.7924528121948242,
+                "b": 0.2582918107509613,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650211500,
+            "modifiedTimeStamp": 1775650211500
+        },
+        {
+            "guid": "74b0a4ff0b1438849b127f9a033371c8",
+            "title": "场景目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.48687469959259035,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650260437,
+            "modifiedTimeStamp": 1775650260437
+        },
+        {
+            "guid": "d8ae6e7b7b236f244b10a66dc6cab110",
+            "title": "资源配置记录文件",
+            "comment": "",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.6666669845581055,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650280998,
+            "modifiedTimeStamp": 1775650280998
+        },
+        {
+            "guid": "05ddd1b70a1c8144fa034b93dd87e489",
+            "title": "框架公共代码",
+            "comment": "",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.0,
+                "b": 0.11162090301513672,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650299896,
+            "modifiedTimeStamp": 1775650299896
+        },
+        {
+            "guid": "0f4cec19aef74db42b05135f5573ee33",
+            "title": "需要热更的代码",
+            "comment": "",
+            "titleColor": {
+                "r": 0.26851534843444826,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650324275,
+            "modifiedTimeStamp": 1775650324275
+        },
+        {
+            "guid": "111a0e70e5718d64f8eafbe4f8eaf296",
+            "title": "代码总目录",
+            "comment": "",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.6394580602645874,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775650347469,
+            "modifiedTimeStamp": 1775650347469
+        },
+        {
+            "guid": "d9c3ffcd1af5d344abd8cd76adb89947",
+            "title": "预制体目录",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1775651182810,
+            "modifiedTimeStamp": 1775651182810
+        }
+    ]
+}

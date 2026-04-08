@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: DefaultPackage
-  PackageVersion: 2026-04-07-14
+  PackageVersion: 2026-04-08-1266
   Wrappers:
-  - BundleGUID: 2b375c2860e3692d19924ad495abe3fc
-    FileName: 2b375c2860e3692d19924ad495abe3fc.bundle
-  - BundleGUID: aaa2d2cbc72871669a3b404d41bcda0d
-    FileName: aaa2d2cbc72871669a3b404d41bcda0d.bundle
+  - BundleGUID: 121bc1cd5a703fdd108e89d41db6e86c
+    FileName: 121bc1cd5a703fdd108e89d41db6e86c.bundle
+  - BundleGUID: 4020a1f7c65937acd95069b3da23e62e
+    FileName: 4020a1f7c65937acd95069b3da23e62e.bundle
+  - BundleGUID: 63baf351aac0338948212139f31f643e
+    FileName: 63baf351aac0338948212139f31f643e.bundle
+  - BundleGUID: 90a34893c6164ae21bade9f6aa229b23
+    FileName: 90a34893c6164ae21bade9f6aa229b23.bundle
   - BundleGUID: b63b44b9908b3742e95463f310856ab8
     FileName: b63b44b9908b3742e95463f310856ab8.bundle
-  - BundleGUID: bbb3e95c8ce06908792432623e0a9258
-    FileName: bbb3e95c8ce06908792432623e0a9258.bundle
   - BundleGUID: befc72c87e85435ce64f405bbb106cec
     FileName: befc72c87e85435ce64f405bbb106cec.bundle
   - BundleGUID: c63e5c681785b9e2ac6c3e55a0d581f1
