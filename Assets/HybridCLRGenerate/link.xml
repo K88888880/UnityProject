@@ -6,12 +6,27 @@
   </assembly>
   <assembly fullname="QFramework">
     <type fullname="QFramework.Architecture`1" preserve="all" />
+    <type fullname="QFramework.IArchitecture" preserve="all" />
+    <type fullname="QFramework.IBelongToArchitecture" preserve="all" />
+    <type fullname="QFramework.ICanGetModel" preserve="all" />
+    <type fullname="QFramework.ICanGetSystem" preserve="all" />
+    <type fullname="QFramework.ICanGetUtility" preserve="all" />
+    <type fullname="QFramework.ICanRegisterEvent" preserve="all" />
+    <type fullname="QFramework.ICanSendCommand" preserve="all" />
+    <type fullname="QFramework.ICanSendQuery" preserve="all" />
+    <type fullname="QFramework.IController" preserve="all" />
   </assembly>
   <assembly fullname="QFramework.CoreKit">
     <type fullname="QFramework.LogKit" preserve="all" />
     <type fullname="QFramework.Pool`1" preserve="all" />
     <type fullname="QFramework.SimpleObjectPool`1" preserve="all" />
     <type fullname="QFramework.Singleton`1" preserve="all" />
+  </assembly>
+  <assembly fullname="UIKit">
+    <type fullname="QFramework.IUIData" preserve="all" />
+    <type fullname="QFramework.UIKit" preserve="all" />
+    <type fullname="QFramework.UILevel" preserve="all" />
+    <type fullname="QFramework.UIPanel" preserve="all" />
   </assembly>
   <assembly fullname="UniTask">
     <type fullname="Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder`1" preserve="all" />

@@ -8,6 +8,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		"QFramework.CoreKit.dll",
 		"QFramework.dll",
 		"System.Core.dll",
+		"UIKit.dll",
 		"UniTask.dll",
 		"UnityEngine.CoreModule.dll",
 		"YooAsset.dll",
@@ -80,8 +81,11 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// QFramework.Architecture.<>c<object>
 	// QFramework.Architecture<object>
 	// QFramework.CustomObjectFactory<object>
+	// QFramework.DefaultObjectFactory<object>
 	// QFramework.IObjectFactory<object>
+	// QFramework.MonoSingletonProperty<object>
 	// QFramework.Pool<object>
+	// QFramework.SafeObjectPool<object>
 	// QFramework.SimpleObjectPool<object>
 	// QFramework.Singleton<object>
 	// QFramework.YooAssetKit.<>c__DisplayClass6_0<object>
@@ -313,6 +317,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,Test.<LoadTable>d__2>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,Test.<LoadTable>d__2&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<QFramework.YooAssetKit.<LoadAssetAsync>d__7<object>>(QFramework.YooAssetKit.<LoadAssetAsync>d__7<object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<Test.<LoadTable>d__2>(Test.<LoadTable>d__2&)
+		// object QFramework.UIKit.OpenPanel<object>(QFramework.UILevel,QFramework.IUIData,string,string)
 		// Cysharp.Threading.Tasks.UniTask<object> QFramework.YooAssetKit.LoadAssetAsync<object>(string)
 		// System.Void QFramework.YooAssetKit.LoadAssetAsync<object>(string,System.Action<object>)
 		// object[] System.Array.Empty<object>()
