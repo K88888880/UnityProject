@@ -49,7 +49,8 @@ namespace MsbFramework
             YooAssets.StartOperation(operation);
             yield return operation;
 
-            string location = "main";
+           // string location = "Main";
+            string location = "Login";
             //¼ÓÔØ³¡¾°
             YooAssetKit.LoadSceneAsync(location, LoadSceneMode.Single, LocalPhysicsMode.None, false, (progress) =>
             {

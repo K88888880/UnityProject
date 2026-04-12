@@ -26,7 +26,8 @@ namespace MsbFramework.Procedure
             //LogKit.I("开始游戏！");
             LogKit.I("处理开始逻辑！");
             mTarget.SetFinish();
-            UIKit.OpenPanel("UIMain", UILevel.Common);
+            UIKit.OpenPanel("UILogin", UILevel.Common);
+            
         }
 
         protected override void OnExit()
