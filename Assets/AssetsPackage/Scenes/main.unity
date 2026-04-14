@@ -354,30 +354,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1272462065}
-  - component: {fileID: 1272462064}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Placer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1272462064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272462063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128545b762f18814f88597f8ec5672e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallManager: {fileID: 1808219825}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!4 &1272462065
 Transform:
   m_ObjectHideFlags: 0
@@ -508,9 +491,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1808219824}
-  - component: {fileID: 1808219825}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WallGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,20 +513,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1808219825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1808219823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6513d6dc7f96f5e4ea393edcc8736ded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 553347926198841583, guid: 883a09dedf9803b44902469b6511834d, type: 3}
-  connectorPrefab: {fileID: 1118340081605236155, guid: 031c03cd555ce5049a18eef1a4db084a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -13,6 +13,11 @@ namespace MsbFramework.UI
             base.OnInit(uiData);
             BtnLogin.onClick.AddListener(() =>
             {
+
+                //GameObject g = new GameObject();
+                //g.AddComponent<WallManager>();
+                //g.AddComponent<WallPlacer>();
+                //UIKit.ClosePanel<UILogin>();
                 //UIPanelRoot.Instance.OpenLoadingPanel();
                 string location = "Main";
                 //º”‘ÿ≥°æ∞

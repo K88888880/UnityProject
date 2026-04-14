@@ -15,6 +15,7 @@ MonoBehaviour:
   AOTMetaAssemblies:
   - Assembly-CSharp.dll
   - AudioKit.dll
+  - HybridCLR.Runtime.dll
   - Luban.Runtime.dll
   - Main.Editor.dll
   - Main.Runtime.dll

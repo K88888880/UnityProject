@@ -6,6 +6,13 @@ public class WallPlacer : MonoBehaviour
     public WallManager wallManager;      // 城墙管理器，需在 Inspector 中拖入
     public LayerMask groundLayer;        // 地面的 Layer，用于射线检测
 
+
+
+
+    private void Start()
+    {
+        wallManager = GetComponent<WallManager>();
+    }
     void Update()
     {
 

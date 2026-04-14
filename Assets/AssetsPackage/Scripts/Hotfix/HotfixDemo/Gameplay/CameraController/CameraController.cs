@@ -1,205 +1,154 @@
+using MsbFramework.UI;
+using QFramework;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, ISingleton
 {
     [Header("移动设置")]
-    public float dragSpeed = 0.005f;        // 手机滑动灵敏度（已降低）
-    public float mouseDragSpeed = 0.3f;     // PC 鼠标灵敏度
-    public float smoothTime = 0.1f;
-    public bool useSmoothing = false;
+    public float panSpeedTouch = 0.5f;   // 触摸滑动速度
+    public float panSpeedMouse = 20f;    // 鼠标拖拽速度
+    public bool invertMouseY = false;    // 是否反转鼠标Y轴
 
     [Header("缩放设置")]
-    public float zoomSpeed = 5f;            // 鼠标滚轮速度
-    public float touchZoomSpeed = 0.02f;    // 双指缩放速度（提高至 0.02）
-    public float minZoom = 5f;
-    public float maxZoom = 20f;
+    public float zoomSpeedTouch = 2f;    // 双指缩放速度
+    public float zoomSpeedMouse = 5f;    // 鼠标滚轮速度
+    public float minZoom = 2f;           // 最小正交大小（最近）
+    public float maxZoom = 20f;          // 最大正交大小（最远）
 
-    [Header("初始视角")]
-    public Vector3 initialPosition = new Vector3(10f, 15f, -10f);
-    public Vector3 initialRotation = new Vector3(35f, 45f, 0f);
+    [Header("边界限制（可选）")]
+    public bool enableBoundary = false;
+    public Vector2 minPosition = new Vector2(-10f, -10f);
+    public Vector2 maxPosition = new Vector2(10f, 10f);
 
-    private Vector3 targetPosition;
-    public Camera cam;
-
-    // 触摸相关
-    private Vector2 lastTouchPos;
+    private Camera cam;
+    private Vector2 lastTouchPos;         // 单指触摸上一帧位置
     private bool isDragging = false;
-    private float initialTouchDistance;
-    private float initialZoomValue;
-
-    void Start()
+    public static CameraController Instance
     {
-        cam = GetComponent<Camera>();
-        if (cam == null)
+        get
         {
-            Debug.LogError("CameraController: 未找到 Camera 组件！");
-            return;
+            return MonoSingletonProperty<CameraController>.Instance;
         }
-        transform.position = initialPosition;
-        transform.rotation = Quaternion.Euler(initialRotation);
-        targetPosition = transform.position;
-        Input.multiTouchEnabled = true;//开启多点触碰
-        Debug.Log("CameraController 初始化完成，位置: " + transform.position + " 旋转: " + transform.rotation.eulerAngles);
     }
 
-    void Update()
+    public void OnSingletonInit()
     {
-        //if (cam == null) return;
+    }
+   public void Start()
+    {
+        cam = Camera.main;
+        if (!cam.orthographic)
+        {
+            Debug.LogWarning("相机不是正交模式，缩放逻辑需要调整");
+        }
+    }
 
-        if (Application.isEditor)
+    public void Update()
+    {
+        // 判断是否使用触摸模式（移动端真机 或 模拟器模拟了触摸）
+        bool useTouch = Input.touchCount > 0;
+
+        if (useTouch)
         {
-            // 编辑器下根据目标平台决定（也可以手动添加开关）
-            if (Application.platform == RuntimePlatform.Android) // 注意：编辑器下平台是 WindowsEditor 或 OSXEditor，不会等于 Android
-            {
-                // 实际需要结合 BuildTarget 判断，参考上面方法
-            }
-            else
-            {
-                HandlePCInput();
-            }
+            HandleTouchInput();
         }
-        else if (Application.platform == RuntimePlatform.Android)
-        {
-            Debug.Log("安卓");
-            HandleMobileInput();
-        }
-        // 平滑移动
-        if (useSmoothing)
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / smoothTime);
         else
-           transform.position = targetPosition;
-    }
-
-    #region PC输入
-    void HandlePCInput()
-    {
-        // 鼠标右键拖拽
-        if (Input.GetMouseButtonDown(1))
         {
-            lastTouchPos = Input.mousePosition;
-            isDragging = true;
-            Debug.Log("PC: 开始拖拽");
-        }
-        if (Input.GetMouseButton(1) && isDragging)
-        {
-            Vector2 delta = (Vector2)Input.mousePosition - lastTouchPos;
-            MoveCameraByScreenDelta(delta, mouseDragSpeed);
-            lastTouchPos = Input.mousePosition;
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            isDragging = false;
-            Debug.Log("PC: 结束拖拽");
+            HandleMouseInput();
         }
 
-        // 滚轮缩放
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0)
-        {
-            Zoom(-scroll * zoomSpeed);
-            Debug.Log("PC: 滚轮缩放 " + scroll);
-        }
+        // 边界限制（移动或缩放后都执行一次）
+        if (enableBoundary)
+            ApplyBoundary();
     }
-    #endregion
-    private int prevTouchCount;
-    #region 手机输入
-    void HandleMobileInput()
+
+    // ------------------- 触摸逻辑（真机 + 支持多点触控的模拟器）--------------------
+    private void HandleTouchInput()
     {
-        int touchCount = Input.touchCount;
-        if (touchCount <= 0) return;
-        // 处理双指开始（只在数量从非2变为2时初始化）
-        if (touchCount == 2 && prevTouchCount != 2)
+        // 双指缩放
+        if (Input.touchCount == 2)
         {
             Touch t1 = Input.GetTouch(0);
             Touch t2 = Input.GetTouch(1);
-            initialTouchDistance = Vector2.Distance(t1.position, t2.position);
-            initialZoomValue = GetCurrentZoom();
-            Debug.Log($"双指开始，距离={initialTouchDistance}，缩放={initialZoomValue}");
-        }
 
-        if (touchCount == 1)
+            // 计算两指之间距离的变化
+            Vector2 prevDelta = (t1.position - t1.deltaPosition) - (t2.position - t2.deltaPosition);
+            Vector2 currDelta = t1.position - t2.position;
+            float deltaMag = prevDelta.magnitude - currDelta.magnitude;
+
+            if (cam.orthographic)
+            {
+                cam.orthographicSize += deltaMag * zoomSpeedTouch * Time.deltaTime;
+                cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
+            }
+            else
+            {
+                // 透视相机：沿Z轴移动
+                transform.Translate(Vector3.forward * deltaMag * zoomSpeedTouch * Time.deltaTime);
+            }
+
+            isDragging = false; // 缩放时禁用拖拽标志
+        }
+        // 单指移动
+        else if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
+
             if (touch.phase == TouchPhase.Began)
             {
-                lastTouchPos = touch.position;
                 isDragging = true;
+                lastTouchPos = touch.position;
             }
             else if (touch.phase == TouchPhase.Moved && isDragging)
             {
                 Vector2 delta = touch.position - lastTouchPos;
-                if (delta.magnitude > 0.1f)
-                    MoveCameraByScreenDelta(delta, dragSpeed);
+                Vector3 move = new Vector3(-delta.x, -delta.y, 0) * panSpeedTouch * Time.deltaTime;
+                transform.Translate(move);
                 lastTouchPos = touch.position;
             }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            else if (touch.phase == TouchPhase.Ended)
             {
                 isDragging = false;
             }
         }
-        else if (touchCount == 2)
+    }
+
+    // ------------------- 鼠标/模拟器备选逻辑（无触摸时自动生效）--------------------
+    private void HandleMouseInput()
+    {
+        // 鼠标左键拖拽移动
+        if (Input.GetMouseButton(0))  // 0 = 左键
         {
-            // 只有双指保持且不进行初始化重置时才计算缩放
-            if (prevTouchCount == 2) // 之前也是双指，进行缩放计算
+            float moveX = Input.GetAxis("Mouse X") * panSpeedMouse * Time.deltaTime;
+            float moveY = Input.GetAxis("Mouse Y") * panSpeedMouse * Time.deltaTime;
+            if (invertMouseY) moveY = -moveY;
+            transform.Translate(new Vector3(-moveX, -moveY, 0));
+        }
+
+        // 鼠标滚轮缩放
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(scroll) > 0.01f)
+        {
+            if (cam.orthographic)
             {
-                Touch t1 = Input.GetTouch(0);
-                Touch t2 = Input.GetTouch(1);
-                float currentDistance = Vector2.Distance(t1.position, t2.position);
-                float delta = currentDistance - initialTouchDistance;
-                float newZoom = initialZoomValue - delta * touchZoomSpeed;
-                newZoom = Mathf.Clamp(newZoom, minZoom, maxZoom);
-                SetZoom(newZoom);
-                // 可选：实时更新初始距离，使缩放更平滑（但会失去基于初始点的缩放速度）
-                // initialTouchDistance = currentDistance;
-                // initialZoomValue = newZoom;
+                cam.orthographicSize -= scroll * zoomSpeedMouse;
+                cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
+            }
+            else
+            {
+                transform.Translate(Vector3.forward * scroll * zoomSpeedMouse);
             }
         }
-        else
-        {
-            isDragging = false;
-        }
-
-        prevTouchCount = touchCount;
     }
-    #endregion
 
-    #region 核心移动与缩放方法
-    /// <summary>
-    /// 根据屏幕坐标增量移动相机（在 XZ 平面移动）
-    /// </summary>
-    private void MoveCameraByScreenDelta(Vector2 screenDelta, float sensitivity)
+    // ------------------- 限制相机移动范围（防止看到场景外）--------------------
+    private void ApplyBoundary()
     {
-        // 获取相机自身的右方向和前方向（水平投影）
-        Vector3 right = transform.right;
-        Vector3 forward = transform.forward;
-        forward.y = 0;
-        forward.Normalize();
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, minPosition.x, maxPosition.x);
+        pos.y = Mathf.Clamp(pos.y, minPosition.y, maxPosition.y);
+        transform.position = pos;
 
-        // 计算世界移动量
-        Vector3 move = (right * screenDelta.x + forward * screenDelta.y) * sensitivity;
-        targetPosition += move;
-
-        // 可选：限制边界（可后续添加）
-        // Debug.Log($"移动量: {move}, 新目标位置: {targetPosition}");
+        // 如果是正交相机，还需限制正交大小已经由 Clamp 完成
     }
-
-    private float GetCurrentZoom()
-    {
-        return cam.orthographic ? cam.orthographicSize : cam.fieldOfView;
-    }
-
-    private void SetZoom(float value)
-    {
-        if (cam.orthographic)
-            cam.orthographicSize = value;
-        else
-            cam.fieldOfView = value;
-    }
-
-    private void Zoom(float delta)
-    {
-        float newZoom = GetCurrentZoom() - delta;
-        SetZoom(Mathf.Clamp(newZoom, minZoom, maxZoom));
-    }
-    #endregion
 }

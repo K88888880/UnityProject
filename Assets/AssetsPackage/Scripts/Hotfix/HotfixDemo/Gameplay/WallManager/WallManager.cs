@@ -1,11 +1,12 @@
+using QFramework;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WallManager : MonoBehaviour
 {
     [Header("预制体")]
-    public GameObject wallPrefab;      // 主墙预制体
-    public GameObject connectorPrefab; // 连接件预制体
+     GameObject wallPrefab;      // 主墙预制体
+     GameObject connectorPrefab; // 连接件预制体
 
     // 存储所有墙体实例，key为格子坐标
     private Dictionary<Vector2Int, GameObject> walls = new Dictionary<Vector2Int, GameObject>();
@@ -22,11 +23,21 @@ public class WallManager : MonoBehaviour
         Vector2Int.right  // (1,0)
     };
 
+
+    private void Start()
+    {
+        LogKit.I("主场景");
+    }
+
     /// <summary>
     /// 在指定格子放置城墙
     /// </summary>
     public void PlaceWall(int x, int z)
     {
+        if(wallPrefab==null)
+        {
+            wallPrefab = YooAssetKit.LoadAssetSync<GameObject>("Wall");
+        } 
         Vector2Int pos = new Vector2Int(x, z);
         if (walls.ContainsKey(pos))
         {
@@ -120,6 +131,10 @@ public class WallManager : MonoBehaviour
     /// </summary>
     private void EnsureConnector(Vector2Int a, Vector2Int b)
     {
+        if (connectorPrefab == null)
+        {
+            connectorPrefab = YooAssetKit.LoadAssetSync<GameObject>("Cell");
+        }
         // 计算边的中点位置
         Vector3 posA = new Vector3(a.x, 0, a.y);
         Vector3 posB = new Vector3(b.x, 0, b.y);

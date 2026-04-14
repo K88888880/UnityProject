@@ -4,6 +4,10 @@
     <type fullname="Luban.BeanBase" preserve="all" />
     <type fullname="Luban.ByteBuf" preserve="all" />
   </assembly>
+  <assembly fullname="Main.Runtime">
+    <type fullname="MsbFramework.Events.OnSceneloadUpdateEvent" preserve="all" />
+    <type fullname="MsbFramework.UI.UIPanelRoot" preserve="all" />
+  </assembly>
   <assembly fullname="QFramework">
     <type fullname="QFramework.Architecture`1" preserve="all" />
     <type fullname="QFramework.IArchitecture" preserve="all" />
@@ -15,9 +19,16 @@
     <type fullname="QFramework.ICanSendCommand" preserve="all" />
     <type fullname="QFramework.ICanSendQuery" preserve="all" />
     <type fullname="QFramework.IController" preserve="all" />
+    <type fullname="QFramework.TypeEventSystem" preserve="all" />
   </assembly>
   <assembly fullname="QFramework.CoreKit">
+    <type fullname="QFramework.ActionKit" preserve="all" />
+    <type fullname="QFramework.IAction" preserve="all" />
+    <type fullname="QFramework.IActionController" preserve="all" />
+    <type fullname="QFramework.IActionExtensions" preserve="all" />
+    <type fullname="QFramework.ISingleton" preserve="all" />
     <type fullname="QFramework.LogKit" preserve="all" />
+    <type fullname="QFramework.MonoSingletonProperty`1" preserve="all" />
     <type fullname="QFramework.Pool`1" preserve="all" />
     <type fullname="QFramework.SimpleObjectPool`1" preserve="all" />
     <type fullname="QFramework.Singleton`1" preserve="all" />
@@ -33,19 +44,53 @@
     <type fullname="Cysharp.Threading.Tasks.UniTask`1" preserve="all" />
     <type fullname="Cysharp.Threading.Tasks.UniTask`1/Awaiter" preserve="all" />
   </assembly>
+  <assembly fullname="Unity.TextMeshPro">
+    <type fullname="TMPro.TMP_InputField" preserve="all" />
+  </assembly>
   <assembly fullname="UnityEngine.CoreModule">
     <type fullname="UnityEngine.Application" preserve="all" />
+    <type fullname="UnityEngine.Camera" preserve="all" />
+    <type fullname="UnityEngine.Color" preserve="all" />
     <type fullname="UnityEngine.Component" preserve="all" />
     <type fullname="UnityEngine.Debug" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Gizmos" preserve="all" />
+    <type fullname="UnityEngine.HeaderAttribute" preserve="all" />
+    <type fullname="UnityEngine.LayerMask" preserve="all" />
+    <type fullname="UnityEngine.Mathf" preserve="all" />
     <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.Quaternion" preserve="all" />
+    <type fullname="UnityEngine.Ray" preserve="all" />
+    <type fullname="UnityEngine.SceneManagement.LoadSceneMode" preserve="all" />
+    <type fullname="UnityEngine.SceneManagement.LocalPhysicsMode" preserve="all" />
     <type fullname="UnityEngine.SendMessageOptions" preserve="all" />
     <type fullname="UnityEngine.SystemInfo" preserve="all" />
     <type fullname="UnityEngine.TextAsset" preserve="all" />
     <type fullname="UnityEngine.Time" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.Vector2" preserve="all" />
+    <type fullname="UnityEngine.Vector2Int" preserve="all" />
     <type fullname="UnityEngine.Vector3" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.InputLegacyModule">
+    <type fullname="UnityEngine.Input" preserve="all" />
+    <type fullname="UnityEngine.Touch" preserve="all" />
+    <type fullname="UnityEngine.TouchPhase" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.PhysicsModule">
+    <type fullname="UnityEngine.Collider" preserve="all" />
+    <type fullname="UnityEngine.Physics" preserve="all" />
+    <type fullname="UnityEngine.RaycastHit" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
+  </assembly>
+  <assembly fullname="YooAsset">
+    <type fullname="YooAsset.SceneHandle" preserve="all" />
   </assembly>
   <assembly fullname="YooAssetKit">
     <type fullname="QFramework.YooAssetKit" preserve="all" />
@@ -92,6 +137,7 @@
     <type fullname="System.Threading.ThreadPool" preserve="all" />
     <type fullname="System.Threading.WaitCallback" preserve="all" />
     <type fullname="System.Type" preserve="all" />
+    <type fullname="System.ValueTuple`2" preserve="all" />
     <type fullname="System.ValueType" preserve="all" />
   </assembly>
 </linker>

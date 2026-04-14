@@ -26,7 +26,7 @@ namespace MsbFramework.Procedure
     /// </summary>
     public class ProcedureLoadAssembly : AbstractState<ResPackageStates, ProcedureManager>
     {
-       
+
         //资产配置文件
         private string location = "YooAssetHybridCLRSetting";
 
@@ -60,7 +60,7 @@ namespace MsbFramework.Procedure
 
                 // 动态插值平滑进度
                 if (displayProgress < 0.98f)
-                    displayProgress = Mathf.Lerp(displayProgress, rawProgress, Time.deltaTime * 10f);
+                    displayProgress = Mathf.Lerp(displayProgress, rawProgress, Time.deltaTime * 1f);
                 else
                     displayProgress = 1;
                 TypeEventSystem.Global.Send(new OnAssetloadProgressEvent() { progress = displayProgress, desc = "资源加载中" });
@@ -78,37 +78,115 @@ namespace MsbFramework.Procedure
         private List<string> mAotMetaAssemblies = new List<string>();
 
         private List<string> mAssetsCache = new List<string>();
+        //IEnumerator LoadAssemblies()
+        //{
+        //    IsLoading = true;
+        //    var packageName = mTarget._packageName;
+        //    var package = YooAssets.GetPackage(packageName);
+        //    //加载资产配置文件
+        //    AssetHandle assetHandle = package.LoadAssetAsync(location);
+        //    yield return assetHandle;
+        //    YooAssetHybridCLRSetting yooAssetHybridCLRSetting = assetHandle.AssetObject as YooAssetHybridCLRSetting;
+        //    mAotMetaAssemblies = yooAssetHybridCLRSetting.AOTMetaAssemblies;
+        //    mHotfixAssemblyNames = yooAssetHybridCLRSetting.HotfixAssemblies;
+        //    mAssetsCache.AddRange(mHotfixAssemblyNames);
+        //    mAssetsCache.AddRange(mAotMetaAssemblies);
+
+        //    AssetHandle tempHandle = null;
+        //    var asset = mAssetsCache.GetEnumerator();
+        //    while (asset.MoveNext())
+        //    {
+        //        tempHandle = package.LoadAssetAsync<TextAsset>(asset.Current);
+        //        rawProgress = (mAssetsCache.IndexOf(asset.Current) + 1 + tempHandle.Progress) / (float)mAssetsCache.Count;
+        //        yield return tempHandle;
+        //        //LogKit.I(asset.Current);
+        //        var assetObj = tempHandle.AssetObject as TextAsset;
+        //        mAssetDatas[asset.Current] = assetObj;
+        //    }
+        //    IsLoading = false;
+        //    yield return null;
+        //    //UIPanelRoot.Instance.CloseLoadingPanel();
+        //    LoadMetadataForAOTAssemblies();
+        //    LoadHotfixAssemblies();
+        //    mAssetDatas.Clear();
+        //}
         IEnumerator LoadAssemblies()
         {
             IsLoading = true;
-            var packageName = mTarget._packageName;
-            var package = YooAssets.GetPackage(packageName);
-            //加载资产配置文件
-            AssetHandle assetHandle = package.LoadAssetAsync(location);
-            yield return assetHandle;
-            YooAssetHybridCLRSetting yooAssetHybridCLRSetting = assetHandle.AssetObject as YooAssetHybridCLRSetting;
-            mAotMetaAssemblies = yooAssetHybridCLRSetting.AOTMetaAssemblies;
-            mHotfixAssemblyNames = yooAssetHybridCLRSetting.HotfixAssemblies;
+            float startTime = Time.realtimeSinceStartup;
+            float minLoadTime = 5f;   // 控制在 1~3 秒，推荐 2.0f
+
+
+            // === 并行加载逻辑（与之前优化版相同）===
+            var package = YooAssets.GetPackage(mTarget._packageName);
+            var settingHandle = package.LoadAssetAsync<YooAssetHybridCLRSetting>(location);
+            yield return settingHandle;
+            var setting = settingHandle.AssetObject as YooAssetHybridCLRSetting;
+            settingHandle.Release();
+
+            mAotMetaAssemblies = setting.AOTMetaAssemblies;
+            mHotfixAssemblyNames = setting.HotfixAssemblies;
+            mAssetsCache.Clear();
             mAssetsCache.AddRange(mHotfixAssemblyNames);
             mAssetsCache.AddRange(mAotMetaAssemblies);
 
-            AssetHandle tempHandle = null;
-            var asset = mAssetsCache.GetEnumerator();
-            while (asset.MoveNext())
+            int total = mAssetsCache.Count;
+            if (total == 0)
             {
-                tempHandle = package.LoadAssetAsync<TextAsset>(asset.Current);
-                rawProgress = (mAssetsCache.IndexOf(asset.Current) + 1 + tempHandle.Progress) / (float)mAssetsCache.Count;
-                yield return tempHandle;
-                //LogKit.I(asset.Current);
-                var assetObj = tempHandle.AssetObject as TextAsset;
-                mAssetDatas[asset.Current] = assetObj;
+                // 补齐最小时间后再结束
+                float elapsed = Time.realtimeSinceStartup - startTime;
+                if (elapsed < minLoadTime) yield return new WaitForSeconds(minLoadTime - elapsed);
+                IsLoading = false;
+                LoadMetadataForAOTAssemblies();
+                LoadHotfixAssemblies();
+                yield break;
             }
+
+            var handles = new List<AssetHandle>(total);
+            foreach (var name in mAssetsCache) handles.Add(package.LoadAssetAsync<TextAsset>(name));
+
+            mAssetDatas.Clear();
+            if (mAssetDatas is Dictionary<string, TextAsset> dict) dict.EnsureCapacity(total);
+
+            int completed = 0;
+            while (completed < total)
+            {
+                float totalProgress = 0f;
+                for (int i = 0; i < total; i++)
+                {
+                    var h = handles[i];
+                    if (h.IsDone)
+                    {
+                        totalProgress += 1f;
+                        if (!mAssetDatas.ContainsKey(mAssetsCache[i]))
+                        {
+                            var assetObj = h.AssetObject as TextAsset;
+                            if (assetObj != null) mAssetDatas[mAssetsCache[i]] = assetObj;
+                            else Debug.LogError($"Failed: {mAssetsCache[i]}");
+                            completed++;
+                        }
+                    }
+                    else totalProgress += h.Progress;
+                }
+                rawProgress = totalProgress / total;
+                yield return null;
+            }
+
+            // 释放 handles
+            foreach (var h in handles) h.Release();
+
+            // === 时间控制：如果加载太快，补齐到 minLoadTime ===
+            float elapsedTime = Time.realtimeSinceStartup - startTime;
+            if (elapsedTime < minLoadTime)
+            {
+                yield return new WaitForSeconds(minLoadTime - elapsedTime);
+            }
+
             IsLoading = false;
-            yield return null;
-            //UIPanelRoot.Instance.CloseLoadingPanel();
             LoadMetadataForAOTAssemblies();
             LoadHotfixAssemblies();
-            mAssetDatas.Clear();
+            mAssetDatas.Clear(); // 按需
+
         }
 
         private static Dictionary<string, TextAsset> mAssetDatas = new Dictionary<string, TextAsset>();
@@ -174,7 +252,7 @@ namespace MsbFramework.Procedure
 
         protected override void OnExit()
         {
-            
+
         }
 
         protected override void OnUpdate()
@@ -190,6 +268,6 @@ namespace MsbFramework.Procedure
             mFSM.ChangeState(ResPackageStates.ClearCacheBundle);
         }
 
-        
+
     }
 }
