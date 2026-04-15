@@ -776,7 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004249862520f4740999d1782f7bd9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playMode: 1
+  playMode: 0
   targetFrame: 45
   mCamera: {fileID: 1066398533}
 --- !u!114 &846121295
@@ -1771,6 +1771,10 @@ PrefabInstance:
     - target: {fileID: 7335831307440040801, guid: bc138672d57ba4f429c5effb0508709c, type: 3}
       propertyPath: m_Name
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913536469795403347, guid: bc138672d57ba4f429c5effb0508709c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

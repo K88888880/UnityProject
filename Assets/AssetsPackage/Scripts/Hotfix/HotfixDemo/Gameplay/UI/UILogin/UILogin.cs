@@ -32,6 +32,7 @@ namespace MsbFramework.UI
                     {
                         UIPanelRoot.Instance.CloseLoadingPanel();
                         UIPanelRoot.Instance.ClearScreen();
+                        UIKit.OpenPanel<UIFixedJoystick>(UILevel.Common);
                         UIKit.ClosePanel<UILogin>();
                     }).Start(this);
                 });
